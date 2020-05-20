@@ -10,7 +10,7 @@ dotnet run
 
 Check out the Swagger API
 
-Code: 
+Code: </br>
 Start from Controllers</br>
     <b>Account</b> - user management, auth</br>
     <b>Command</b> - control the IoT device from the mobile app </br>
@@ -18,7 +18,7 @@ Start from Controllers</br>
     <b>SensorData</b> - mock of the data from the sensors on the device (temp, light, humidity)</br>
     <b>Ws</b> - the websockets controller used to communicate to the IoT device before transitioning to SocketIO</br>
 
-Other components of interest:
+Other components of interest:</br>
 <b>ScheduledWateringService</b> - background service used to push events to the IoT device</br>
 <b>PushNotificationService</b> - service used to push notifications throught the Expo platform</br>
 <b>EmailSender</b> - SendGrid email client</br>
