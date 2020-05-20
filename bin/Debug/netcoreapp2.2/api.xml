@@ -1,0 +1,893 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>api</name>
+    </assembly>
+    <members>
+        <member name="T:api.Controllers.AccountController">
+            <summary>
+            Account controller
+            </summary>
+        </member>
+        <member name="P:api.Controllers.AccountController.Context">
+            <summary>
+            The database context
+            </summary>
+        </member>
+        <member name="M:api.Controllers.AccountController.#ctor(Microsoft.AspNetCore.Identity.UserManager{api.Models.User},Microsoft.AspNetCore.Identity.SignInManager{api.Models.User},Microsoft.AspNetCore.Identity.RoleManager{Microsoft.AspNetCore.Identity.IdentityRole},api.Models.Db,api.Utils.ITokenGenerator,Microsoft.AspNetCore.Identity.UI.Services.IEmailSender,System.Net.Http.IHttpClientFactory,api.Utils.IFacebookAuthOptions)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="userManager"></param>
+            <param name="signInManager"></param>
+            <param name="roleManager"></param>
+            <param name="dbContext"></param>
+            <param name="tokenGenerator"></param>
+            <param name="emailSender"></param>
+            <param name="clientFactory"></param>
+            <param name="facebookOptions"></param>
+        </member>
+        <member name="M:api.Controllers.AccountController.SwaggerLogin(api.Dtos.OAuthLoginDto)">
+            <summary>
+            Login a user via email and password but through the swagger endpoint
+            </summary>
+            <param name="model">The body of the request</param>
+        </member>
+        <member name="M:api.Controllers.AccountController.Login(api.Dtos.LoginDto)">
+            <summary>
+            Login a user via email and password
+            </summary>
+            <param name="model">The body of the request</param>
+        </member>
+        <member name="M:api.Controllers.AccountController.Register(api.Dtos.RegisterDto)">
+            <summary>
+            Register a new user
+            </summary>
+        </member>
+        <member name="M:api.Controllers.AccountController.RefreshToken(System.String)">
+            <summary>
+            Refresh a token with the current refresh token
+            </summary>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="M:api.Controllers.AccountController.ForgotPassword(api.Dtos.ForgotPasswordDto)">
+            <summary>
+            Trigger a "forgot password" flow
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.AccountController.ResetPassword(api.Dtos.ResetPasswordDto)">
+            <summary>
+            Reset a password
+            </summary>
+            <param name="resetPass">The payload of the request</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.AccountController.Facebook(api.Dtos.FacebookLoginDto)">
+            <summary>
+            Login via facebook
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:api.Controllers.AccountController.DeleteUser(System.Guid)">
+            <summary>
+            Deletes a user
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.AccountController.Logout">
+            <summary>
+            Logs out the currently logged in user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.AccountController.SetExpoPushToken(api.Dtos.ExpoPushTokenDto)">
+            <summary>
+            Adds an expo push token to the user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:api.Controllers.CommandController">
+            <summary>
+            Controller used to command the device
+            </summary>
+        </member>
+        <member name="M:api.Controllers.CommandController.#ctor(api.Utils.IDispatcher,api.Models.Db,Microsoft.AspNetCore.Identity.UserManager{api.Models.User},Microsoft.Extensions.Logging.ILogger{api.Controllers.CommandController})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dispatcher">The dispatcher used to communicate internally</param>
+            <param name="context">DB context</param>
+            <param name="userManager">The user manager</param>
+            <param name="logger">The logger</param>
+        </member>
+        <member name="M:api.Controllers.CommandController.WaterNow(api.Dtos.WaterNowDto)">
+            <summary>
+            Operation used to command the device to begin watering
+            </summary>
+            <param name="dto"></param>
+        </member>
+        <member name="M:api.Controllers.CommandController.CancelWatering(api.Dtos.Level)">
+            <summary>
+            Operation used to command the device to cancel the current watering process
+            </summary>
+            <param name="level"></param>
+        </member>
+        <member name="M:api.Controllers.CommandController.GetRunHistory">
+            <summary>
+            Get the history of all the waterings for the user/device
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.UpdateSchedule(api.Dtos.WateringScheduleDto)">
+            <summary>
+            Updates a schedule with new values
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.GetSchedules">
+            <summary>
+            Gets all the schedules for the device
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.ToggleSchedule(api.Dtos.Level)">
+            <summary>
+            Enables or disables a schedule
+            </summary>
+            <param name="level"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.GetDeviceStatus(System.String)">
+            <summary>
+            Gets the online/offline status of the device
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.GetAllHistoryForDevice(System.String)">
+            <summary>
+            Gets the online/offline history for this device
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.CommandController.GetNews">
+            <summary>
+            Gets the news for this user. This is deprecated
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:api.Controllers.DeviceTokenDto">
+            <summary>
+            The dto used to send the device token between internal services
+            </summary>
+        </member>
+        <member name="P:api.Controllers.DeviceTokenDto.deviceToken">
+            <summary>
+            The device token
+            </summary>
+            <value>It's a string</value>
+        </member>
+        <member name="T:api.Controllers.InternalCommsController">
+            <summary>
+            ontroller used for internal comms between own web services. This has no security but the host should be 
+            configured such that it only accepts calls from the other microservices' ips
+            </summary>
+        </member>
+        <member name="M:api.Controllers.InternalCommsController.#ctor(api.Utils.IDispatcher,Microsoft.Extensions.Logging.ILogger{api.Controllers.InternalCommsController},api.Models.Db,api.Services.IPushNotificationService)">
+            <summary>
+            Controller used for internal comms between own web services. This has no security but the host should be 
+            configured such that it only accepts calls from the other microservices' ips
+            </summary>
+            <param name="dispatcher">The Dispatcher</param>
+            <param name="logger">The logger</param>
+            <param name="context">The Db context</param>
+            <param name="pushNotificationService">The push notifications service</param>
+        </member>
+        <member name="M:api.Controllers.InternalCommsController.DeviceOffline(api.Controllers.DeviceTokenDto)">
+            <summary>
+            The deviceOffline operation. It sets the device as offline in the DB and send a push notification to the app
+            </summary>
+            <param name="devTok">The device token that identifies the device</param>
+            <returns>Http status</returns>
+        </member>
+        <member name="M:api.Controllers.InternalCommsController.DeviceOnline(api.Controllers.DeviceTokenDto)">
+            <summary>
+            The DeviceOnline operation.null It sets the device as online in the db and sends a push notification to the app
+            </summary>
+            <param name="devTok">The device token that identifies the device</param>
+            <returns>Http status</returns>
+        </member>
+        <member name="T:api.Controllers.MarketingController">
+            <summary>
+            Controller used for marketing stuff
+            </summary>
+        </member>
+        <member name="M:api.Controllers.MarketingController.#ctor(api.Models.Db,Microsoft.AspNetCore.Identity.UI.Services.IEmailSender,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:api.Controllers.MarketingController.Newsletter(api.Dtos.ProductClientDto)">
+            <summary>
+            Operation used to register a user for the newsletter
+            </summary>
+            <param name="clientDto"></param>
+        </member>
+        <member name="M:api.Controllers.MarketingController.Unsubscribe(System.String)">
+            <summary>
+            Action used to unsubscribe an existing user
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.Controllers.CurrentSensorDataDto">
+            <summary>
+            A very temporary DTO for sensor data
+            </summary>
+        </member>
+        <member name="P:api.Controllers.CurrentSensorDataDto.lightDataPoint">
+            <summary>
+            The data from the light sensor
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Controllers.CurrentSensorDataDto.tempDataPoint">
+            <summary>
+            The data from the temperature sensor
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Controllers.CurrentSensorDataDto.humidityDataPoint">
+            <summary>
+            The data from the humidity sensor
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Controllers.SensorDataController">
+            <summary>
+            Controller used to interact with the data produced by the sensors
+            </summary>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.#ctor(api.Utils.IDispatcher,Microsoft.Extensions.Logging.ILogger{api.Controllers.SensorDataController},api.Models.Db)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="dispatcher"></param>
+            <param name="logger"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetCurrentSensorInfo(System.String)">
+            <summary>
+            Gets the current sensor info from the device. This is done in real time
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetHourlyLightHistory(System.String)">
+            <summary>
+            Gets the last 7 day's worth of hourly light data
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetLongTermLightHistory(System.String)">
+            <summary>
+            Get the last 7 months of aggregate light data
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetHourlyTempHistory(System.String)">
+            <summary>
+            Get the last 7 day's worth of hourly temperature data
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetLongTermTempHistory(System.String)">
+            <summary>
+            Get the last 7 months of aggregate temperature data
+            /// </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetHourlyHumidityHistory(System.String)">
+            <summary>
+            Get the last 7 day's worth of hourly humidity data
+            </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Controllers.SensorDataController.GetLongTermHumidityHistory(System.String)">
+            <summary>
+            Get the last 7 months of aggregate humidity data
+            /// </summary>
+            <param name="deviceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.Controllers.WsController">
+            <summary>
+            THIS IS DEPRECATED. WILL DELETE SOON
+            </summary>
+        </member>
+        <member name="M:api.Controllers.WsController.#ctor(api.Utils.IDispatcher,Microsoft.Extensions.Logging.ILogger{api.Controllers.WsController},api.Models.Db,api.Services.IPushNotificationService)">
+            <summary>
+            The websockets controller. Used to communicate with the ESP8266
+            </summary>
+            <param name="dispatcher">The event dispatcher</param>
+            <param name="logger">The logger</param>
+            <param name="context">The DB context</param>
+            <param name="pushNotificationService">The push notif service</param>
+        </member>
+        <member name="T:api.Dtos.LoginDto">
+            <summary>
+            Used for login 
+            </summary>
+        </member>
+        <member name="P:api.Dtos.LoginDto.Email">
+            <summary>
+            The user email
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.LoginDto.Password">
+            <summary>
+            The user password
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Dtos.RegisterDto">
+            <summary>
+            Used for registration
+            </summary>
+        </member>
+        <member name="P:api.Dtos.RegisterDto.Email">
+            <summary>
+            The user email
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.RegisterDto.Password">
+            <summary>
+            The user password
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Dtos.OAuthLoginDto">
+            <summary>
+            OAuth login DTO
+            </summary>
+        </member>
+        <member name="P:api.Dtos.OAuthLoginDto.Username">
+            <summary>
+            The user
+            </summary>
+        </member>
+        <member name="P:api.Dtos.OAuthLoginDto.Password">
+            <summary>
+            The password
+            </summary>
+        </member>
+        <member name="P:api.Dtos.OAuthLoginDto.GrantType">
+            <summary>
+            The grant type
+            </summary>
+        </member>
+        <member name="T:api.Dtos.OAuthLoginResponseDto">
+            <summary>
+            OAuth login response DTO
+            </summary>
+        </member>
+        <member name="P:api.Dtos.OAuthLoginResponseDto.AccessToken">
+            <summary>
+            The access token
+            </summary>
+        </member>
+        <member name="P:api.Dtos.OAuthLoginResponseDto.RefreshToken">
+            <summary>
+            The refresh token
+            </summary>
+        </member>
+        <member name="T:api.Dtos.ProductClientDto">
+            <summary>
+            Client data when they register
+            </summary>
+        </member>
+        <member name="P:api.Dtos.ProductClientDto.name">
+            <summary>
+            The name they should be addressed by
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.ProductClientDto.email">
+            <summary>
+            The email
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.ProductClientDto.isSubscribed">
+            <summary>
+            Whether they are registered to get newsletters
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Dtos.PushNotificationDto">
+            <summary>
+            The DTO used for expo push notifications
+            </summary>
+        </member>
+        <member name="P:api.Dtos.PushNotificationDto.title">
+            <summary>
+            The title of the notification
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.PushNotificationDto.body">
+            <summary>
+            The body of the notification
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Dtos.PushNotificationDto.sound">
+            <summary>
+            The sound the notification makes on the user device.await This should be an enum at some point
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Models.ProductClient">
+            <summary>
+            The product client from a marketing perspective
+            </summary>
+        </member>
+        <member name="P:api.Models.ProductClient.Id">
+            <summary>
+            The id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.ProductClient.Name">
+            <summary>
+            The name the customer should be addressed by
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.ProductClient.Email">
+            <summary>
+            The email
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.ProductClient.IsSubscribed">
+            <summary>
+            Whether or not they are subscribed to the newsletter
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Models.SensorData">
+            <summary>
+            Object containing a data point from a device mounted sensor
+            </summary>
+        </member>
+        <member name="P:api.Models.SensorData.Id">
+            <summary>
+            The id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.SensorData.EventTime">
+            <summary>
+            The time the data point was captured
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.SensorData.Value">
+            <summary>
+            The value of the data point in its metric
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.SensorData.IsAggregate">
+            <summary>
+            True if this data point is an aggregate, like a daily average.
+            False if not specified
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Models.SensorData.Device">
+            <summary>
+            The device the data point was captured on
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Program">
+            <summary>
+            Main class
+            </summary>
+        </member>
+        <member name="M:api.Program.Main(System.String[])">
+            <summary>
+            Main entrypoint for the API
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:api.Services.IPushNotificationService">
+            <summary>
+            Service for push notifications
+            </summary>
+        </member>
+        <member name="M:api.Services.IPushNotificationService.BroadcastDeviceOfflineNotification(api.Models.User,System.String)">
+            <summary>
+            Given a user it sends push notifications to all active devices
+            </summary>
+            <param name="user">The user</param>
+            <param name="deviceToken">The notification</param>
+        </member>
+        <member name="T:api.Services.PushNotificationService">
+            <summary>
+            Service for push notifications
+            </summary>
+        </member>
+        <member name="M:api.Services.PushNotificationService.#ctor(api.Models.Db,Microsoft.Extensions.Logging.ILogger{api.Services.IPushNotificationService})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">DbContext is injected</param>
+            <param name="logger">The logger</param>
+        </member>
+        <member name="M:api.Services.PushNotificationService.BroadcastDeviceOfflineNotification(api.Models.User,System.String)">
+            <summary>
+            Send a CIP offline notification to all user devices
+            </summary>
+            <param name="user">The user</param>
+            <param name="deviceToken">The CIP token</param>
+        </member>
+        <member name="T:api.Services.ISeedDatabaseService">
+            <summary>
+            Service to seed the DB
+            </summary>
+        </member>
+        <member name="M:api.Services.ISeedDatabaseService.Seed">
+            <summary>
+            Seeds the database with some predefined data
+            </summary>
+        </member>
+        <member name="T:api.Services.SeedDatabaseService">
+            <summary>
+            Implementation of the DB service
+            </summary>
+        </member>
+        <member name="M:api.Services.SeedDatabaseService.#ctor(api.Models.Db)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">DB context</param>
+        </member>
+        <member name="M:api.Services.SeedDatabaseService.Seed">
+            <summary>
+            Seed DB implementation
+            </summary>
+        </member>
+        <member name="T:api.Startup">
+            <summary>
+            Startup class
+            </summary>
+        </member>
+        <member name="M:api.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">root config</param>
+            <param name="env">hosting env</param>
+        </member>
+        <member name="P:api.Startup.Configuration">
+            <summary>
+            The root app configuration
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Startup.HostingEnvironment">
+            <summary>
+            The hosting environment
+            </summary>
+        </member>
+        <member name="M:api.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures services, called by the runtime
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configure the app once the services are up and running
+            </summary>
+        </member>
+        <member name="T:api.Utils.IAuthMessageSenderOptions">
+            <summary>
+            Options for the auth message sender
+            </summary>
+        </member>
+        <member name="P:api.Utils.IAuthMessageSenderOptions.SendGridUser">
+            <summary>
+            The sendgrid user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.IAuthMessageSenderOptions.SendGridKey">
+            <summary>
+            The sendgrid key
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.IDispatcher">
+            <summary>
+            Dispatcher handling the messaging between components
+            </summary>
+        </member>
+        <member name="E:api.Utils.IDispatcher.WaterNowEvent">
+            <summary>
+            Water now event
+            </summary>
+        </member>
+        <member name="E:api.Utils.IDispatcher.CancelWateringEvent">
+            <summary>
+            Cancel watering event
+            </summary>
+        </member>
+        <member name="M:api.Utils.IDispatcher.WaterNow(System.Object,api.Utils.WaterNowArgs)">
+            <summary>
+            water now handler
+            </summary>
+            <param name="source"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:api.Utils.IDispatcher.CancelWatering(System.Object,api.Utils.CancelWateringArgs)">
+            <summary>
+            cancel watering handler
+            </summary>
+            <param name="source"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:api.Utils.WaterNowArgs">
+            <summary>
+            Water now event args
+            </summary>
+        </member>
+        <member name="P:api.Utils.WaterNowArgs.WaterNow">
+            <summary>
+            The dto containing the parameters for the watering
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.WaterNowArgs.Token">
+            <summary>
+            The device token
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.CancelWateringArgs">
+            <summary>
+            The cancel watering event args
+            </summary>
+        </member>
+        <member name="P:api.Utils.CancelWateringArgs.Level">
+            <summary>
+            Options
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.CancelWateringArgs.Token">
+            <summary>
+            The device token
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.Dispatcher">
+            <summary>
+            Dispatcher handling the messaging between components
+            </summary>
+        </member>
+        <member name="E:api.Utils.Dispatcher.WaterNowEvent">
+            <summary>
+            Water now event
+            </summary>
+        </member>
+        <member name="E:api.Utils.Dispatcher.CancelWateringEvent">
+            <summary>
+            Cancel watering event
+            </summary>
+        </member>
+        <member name="M:api.Utils.Dispatcher.#ctor(Microsoft.Extensions.Logging.ILogger{api.Utils.Dispatcher})">
+            <summary>
+            constructor
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:api.Utils.Dispatcher.WaterNow(System.Object,api.Utils.WaterNowArgs)">
+            <summary>
+            water now handler
+            </summary>
+            <param name="source"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:api.Utils.Dispatcher.CancelWatering(System.Object,api.Utils.CancelWateringArgs)">
+            <summary>
+            cancel watering handler
+            </summary>
+            <param name="source"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:api.Utils.EmailSender">
+            <summary>
+            Utility used for sending emails from the app
+            </summary>
+        </member>
+        <member name="M:api.Utils.EmailSender.#ctor(api.Utils.IAuthMessageSenderOptions)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:api.Utils.EmailSender.Options">
+            <summary>
+            Sendgrid Options
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:api.Utils.EmailSender.SendEmailAsync(System.String,System.String,System.String)">
+            <summary>
+            Send email
+            </summary>
+            <param name="email"></param>
+            <param name="subject"></param>
+            <param name="htmlMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.Utils.IFacebookAuthOptions">
+            <summary>
+            Fb auth options
+            </summary>
+        </member>
+        <member name="P:api.Utils.IFacebookAuthOptions.FbAppId">
+            <summary>
+            app id
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.IFacebookAuthOptions.FbSecret">
+            <summary>
+            app secret
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.IJwtOptions">
+            <summary>
+            Jwt options
+            </summary>
+        </member>
+        <member name="P:api.Utils.IJwtOptions.JwtKey">
+            <summary>
+            jwt key
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.IJwtOptions.JwtIssuer">
+            <summary>
+            jwt issuer
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.Utils.IJwtOptions.JwtExpireDays">
+            <summary>
+            jwt expires
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.Misc">
+            <summary>
+            Misc utilities
+            </summary>
+        </member>
+        <member name="M:api.Utils.Misc.GetIdFromClaimsPrincipal(System.Security.Claims.ClaimsPrincipal)">
+            <summary>
+            Gets the ID from the claims principal
+            </summary>
+            <param name="cp">The claims principal</param>
+        </member>
+        <member name="T:api.Utils.ISecretsVault">
+            <summary>
+            Gets app secrets based on the environment
+            </summary>
+        </member>
+        <member name="P:api.Utils.ISecretsVault.DbConnectionString">
+            <summary>
+            The connection string
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.Utils.ITokenGenerator">
+            <summary>
+            Generates tokens for users
+            </summary>
+        </member>
+        <member name="M:api.Utils.ITokenGenerator.GetRefreshToken(System.Int32)">
+            <summary>
+            Gets the refresh token
+            </summary>
+            <param name="size"></param>
+        </member>
+        <member name="M:api.Utils.ITokenGenerator.GetDeviceToken">
+            <summary>
+            Gets the device token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.ITokenGenerator.GetOAuthPassword">
+            <summary>
+            Gets the oauth password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.ITokenGenerator.GenerateJwtToken(api.Models.User)">
+            <summary>
+            Generates a jwt token
+            </summary>
+            <param name="user">The user</param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.ITokenGenerator.GetPrincipalFromToken(System.String)">
+            <summary>
+            Get the claims principal from the user
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:api.Utils.TokenGenerator">
+            <summary>
+            Generates tokens for users
+            </summary>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.#ctor(Microsoft.Extensions.Logging.ILogger{api.Utils.TokenGenerator},api.Models.Db,api.Utils.IJwtOptions)">
+            <summary>
+            Generates tokens for users
+            </summary>
+            <param name="logger">A logger</param>
+            <param name="context">The DB</param>
+            <param name="options">JWT config options</param>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.GetRefreshToken(System.Int32)">
+            <summary>
+            Get the refresh token
+            </summary>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.GetDeviceToken">
+            <summary>
+            Get the device token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.GetOAuthPassword">
+            <summary>
+            Get the oauth password
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.GenerateJwtToken(api.Models.User)">
+            <summary>
+            Create the jwt token for the user
+            </summary>
+            <param name="user">The <see cref="T:api.Models.User"/> instance</param>
+        </member>
+        <member name="M:api.Utils.TokenGenerator.GetPrincipalFromToken(System.String)">
+            <summary>
+            Gets the claim principal from the refresh token
+            </summary>
+            <param name="token"></param>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,17 @@
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.xml
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.deps.json
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.runtimeconfig.json
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.runtimeconfig.dev.json
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.dll
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/api.pdb
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.csprojAssemblyReference.cache
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.RazorAssemblyInfo.cache
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.RazorAssemblyInfo.cs
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.AssemblyInfoInputs.cache
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.AssemblyInfo.cs
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.RazorTargetAssemblyInfo.cache
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.dll
+/Users/bogdanmoldovean/workplace/meridia/api/api/obj/Debug/netcoreapp2.2/api.pdb
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/appsettings.Development.json
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/appsettings.json
+/Users/bogdanmoldovean/workplace/meridia/api/api/bin/Debug/netcoreapp2.2/Properties/launchSettings.json
