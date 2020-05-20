@@ -6,6 +6,7 @@ Exposes a REST api for communication with the mobile app
 Exposes a REST api for communication with the Socket.IO server (which is to be replaced with Azure IoT)
 
 dotnet restore
+
 dotnet run
 
 Check out the Swagger API
