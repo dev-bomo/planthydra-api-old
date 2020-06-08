@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using api.GraphQL;
 using api.Helpers;
 using api.Models;
 using api.Services;
@@ -60,7 +61,7 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             ISecretsVault secretsVault = new SecretsVault(HostingEnvironment);
-            services.AddDbContext<Db>(options => options.UseSqlServer(secretsVault.DbConnectionString));
+            services.AddDbContext<Db>(options => options.UseSqlite(secretsVault.DbConnectionString));
             services.AddIdentity<User, IdentityRole>(config =>
                 {
                     config.SignIn.RequireConfirmedEmail = false;
@@ -110,6 +111,7 @@ namespace api
             services.AddTransient<ISeedDatabaseService, SeedDatabaseService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient();
+            services.AddGraphQLServices();
 
 
             // Register the Swagger generator, defining one or more Swagger documents
@@ -173,6 +175,7 @@ namespace api
             var rewriteOptions = new RewriteOptions();
             rewriteOptions.AddRedirect("^$", "swagger");
             app.UseRewriter(rewriteOptions);
+            app.ConfigureGraphQL();
         }
     }
 }

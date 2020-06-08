@@ -317,6 +317,7 @@
         <member name="M:api.Controllers.WsController.#ctor(api.Utils.IDispatcher,Microsoft.Extensions.Logging.ILogger{api.Controllers.WsController},api.Models.Db,api.Services.IPushNotificationService)">
             <summary>
             The websockets controller. Used to communicate with the ESP8266
+            This functionality is obsolete as we transitioned to socket.IO
             </summary>
             <param name="dispatcher">The event dispatcher</param>
             <param name="logger">The logger</param>

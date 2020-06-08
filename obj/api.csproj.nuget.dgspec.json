@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/bogdanmoldovean/workplace/meridia/api/api/api.csproj": {}
+    "/Users/bogdanmoldovean/workplace/planthydra/planthydra-old/api/api.csproj": {}
   },
   "projects": {
-    "/Users/bogdanmoldovean/workplace/meridia/api/api/api.csproj": {
+    "/Users/bogdanmoldovean/workplace/planthydra/planthydra-old/api/api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/bogdanmoldovean/workplace/meridia/api/api/api.csproj",
+        "projectUniqueName": "/Users/bogdanmoldovean/workplace/planthydra/planthydra-old/api/api.csproj",
         "projectName": "api",
-        "projectPath": "/Users/bogdanmoldovean/workplace/meridia/api/api/api.csproj",
+        "projectPath": "/Users/bogdanmoldovean/workplace/planthydra/planthydra-old/api/api.csproj",
         "packagesPath": "/Users/bogdanmoldovean/.nuget/packages/",
-        "outputPath": "/Users/bogdanmoldovean/workplace/meridia/api/api/obj/",
+        "outputPath": "/Users/bogdanmoldovean/workplace/planthydra/planthydra-old/api/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -46,6 +46,18 @@
             "Azure.Security.KeyVault.Secrets": {
               "target": "Package",
               "version": "[4.0.3, )"
+            },
+            "GraphQL": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "GraphQL.Server.Ui.Playground": {
+              "target": "Package",
+              "version": "[3.4.0, )"
             },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
@@ -90,6 +102,10 @@
             "Swashbuckle.AspNetCore.Filters": {
               "target": "Package",
               "version": "[4.5.5, )"
+            },
+            "graphiql": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             }
           },
           "imports": [

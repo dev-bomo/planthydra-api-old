@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Models;
@@ -10,16 +9,14 @@ using api.Models;
 namespace api.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20190723104303_ChangedWateringIntervals")]
-    partial class ChangedWateringIntervals
+    [Migration("20200608125812_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -39,8 +36,7 @@ namespace api.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -48,8 +44,7 @@ namespace api.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -68,8 +63,7 @@ namespace api.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -131,11 +125,28 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("api.Models.DeviceEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("DeviceId");
+
+                    b.Property<DateTime>("EventDate");
+
+                    b.Property<bool>("IsOnline");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("DeviceEvent");
+                });
+
             modelBuilder.Entity("api.Models.DeviceToken", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool?>("IsDeviceOnline");
 
@@ -150,11 +161,44 @@ namespace api.Migrations
                     b.ToTable("DeviceTokens");
                 });
 
+            modelBuilder.Entity("api.Models.ExpoPushToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Token");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExpoPushTokens");
+                });
+
+            modelBuilder.Entity("api.Models.ProductClient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsSubscribed");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductClients");
+                });
+
             modelBuilder.Entity("api.Models.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Expires");
 
@@ -234,8 +278,7 @@ namespace api.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -246,6 +289,8 @@ namespace api.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Duration");
+
+                    b.Property<bool>("IsEnabled");
 
                     b.Property<Guid?>("LastRunId");
 
@@ -313,10 +358,24 @@ namespace api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("api.Models.DeviceEvent", b =>
+                {
+                    b.HasOne("api.Models.DeviceToken", "Device")
+                        .WithMany("DeviceEvents")
+                        .HasForeignKey("DeviceId");
+                });
+
             modelBuilder.Entity("api.Models.DeviceToken", b =>
                 {
                     b.HasOne("api.Models.User", "User")
                         .WithMany("DeviceTokens")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("api.Models.ExpoPushToken", b =>
+                {
+                    b.HasOne("api.Models.User", "User")
+                        .WithMany("ExpoPushTokens")
                         .HasForeignKey("UserId");
                 });
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace api.Migrations
@@ -48,11 +47,26 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductClients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    IsSubscribed = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductClients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +87,7 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -158,8 +172,9 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Token = table.Column<string>(nullable: true),
+                    IsDeviceOnline = table.Column<bool>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -174,11 +189,32 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExpoPushTokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Token = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpoPushTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExpoPushTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RefreshTokens",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Token = table.Column<string>(nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
@@ -216,6 +252,27 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeviceEvent",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DeviceId = table.Column<int>(nullable: true),
+                    EventDate = table.Column<DateTime>(nullable: false),
+                    IsOnline = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceEvent", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DeviceEvent_DeviceTokens_DeviceId",
+                        column: x => x.DeviceId,
+                        principalTable: "DeviceTokens",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WateringSchedules",
                 columns: table => new
                 {
@@ -224,9 +281,10 @@ namespace api.Migrations
                     StartTime = table.Column<string>(nullable: true),
                     Duration = table.Column<int>(nullable: false),
                     NotifiyBeforeMinutes = table.Column<int>(nullable: false),
-                    Interval = table.Column<int>(nullable: false),
+                    WateringDays = table.Column<string>(nullable: true),
                     LastRunId = table.Column<Guid>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true),
+                    IsEnabled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,8 +312,7 @@ namespace api.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -281,12 +338,21 @@ namespace api.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeviceEvent_DeviceId",
+                table: "DeviceEvent",
+                column: "DeviceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceTokens_UserId",
                 table: "DeviceTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpoPushTokens_UserId",
+                table: "ExpoPushTokens",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -328,7 +394,13 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DeviceTokens");
+                name: "DeviceEvent");
+
+            migrationBuilder.DropTable(
+                name: "ExpoPushTokens");
+
+            migrationBuilder.DropTable(
+                name: "ProductClients");
 
             migrationBuilder.DropTable(
                 name: "RefreshTokens");
@@ -338,6 +410,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "DeviceTokens");
 
             migrationBuilder.DropTable(
                 name: "ScheduledRuns");
